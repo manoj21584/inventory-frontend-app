@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { request } from '../helpers/axios_helper';
+import React, { useEffect, useState } from "react";
+import { request } from "../helpers/axios_helper";
 
 const InventoryTable = () => {
   const [inventoryData, setInventoryData] = useState([]);
@@ -52,10 +52,14 @@ const InventoryTable = () => {
 
   // Handle delete request
   const handleDeleteInventory = async (productId) => {
-    if (window.confirm("Are you sure you want to delete this inventory item?")) {
+    if (
+      window.confirm("Are you sure you want to delete this inventory item?")
+    ) {
       try {
         await request("DELETE", `/api/inventory/${productId}`);
-        setInventoryData(inventoryData.filter(item => item.product.id !== productId));
+        setInventoryData(
+          inventoryData.filter((item) => item.product.id !== productId)
+        );
         alert("Inventory deleted successfully!");
       } catch (error) {
         console.error("Error deleting inventory:", error);
@@ -95,31 +99,33 @@ const InventoryTable = () => {
                 <tr key={inventory.id}>
                   <td>{inventory.id}</td>
                   <td>{inventory.product.id}</td>
-                  <td>
-                    {inventory.lastUpdate 
-                      ? new Date(inventory.lastUpdate).toLocaleString() // Format date
-                      : 'N/A'}
-                  </td>
+                  <td>{inventory.lastUpdated}</td>
                   <td>{inventory.quantity}</td>
                   <td>
                     <input
                       type="number"
                       min="1"
                       className="form-control"
-                      value={quantityUpdate[inventory.product.id] || ''}
-                      onChange={(e) => handleQuantityChange(e, inventory.product.id)}
+                      value={quantityUpdate[inventory.product.id] || ""}
+                      onChange={(e) =>
+                        handleQuantityChange(e, inventory.product.id)
+                      }
                     />
                   </td>
                   <td>
                     <button
                       className="btn btn-primary"
-                      onClick={() => handleUpdateInventory(inventory.product.id)}
+                      onClick={() =>
+                        handleUpdateInventory(inventory.product.id)
+                      }
                     >
                       Update
                     </button>
                     <button
                       className="btn btn-danger ml-2"
-                      onClick={() => handleDeleteInventory(inventory.product.id)}
+                      onClick={() =>
+                        handleDeleteInventory(inventory.product.id)
+                      }
                     >
                       Delete
                     </button>
